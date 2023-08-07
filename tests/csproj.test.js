@@ -1,5 +1,5 @@
 import { readdirSync } from 'fs';
-import { getVersionFromFile, readFile } from '../action/csproj';
+import { getVersionFromFile, readFile } from '../src/csproj';
 
 describe('readFile function', () => {
   it('should read existing file', () => {
