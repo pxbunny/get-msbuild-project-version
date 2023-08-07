@@ -1,0 +1,33 @@
+{
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+  "extends": "eslint:recommended",
+  "parserOptions": {
+    "ecmaVersion": "latest",
+    "sourceType": "module"
+  },
+  "rules": {
+    "indent": ["warn", 2],
+    "linebreak-style": ["error", "unix"],
+    "quotes": ["warn", "single"],
+    "semi": ["warn", "always"],
+    "eol-last": "warn",
+    "camelcase": "error",
+    "prefer-const": "warn",
+    "prefer-destructuring": "warn",
+    "no-else-return": "error",
+    "no-nested-ternary": "warn",
+    "no-duplicate-imports": "error",
+    "no-extra-boolean-cast": "warn",
+    "no-unneeded-ternary": "warn",
+    "no-use-before-define": "error",
+    "no-multiple-empty-lines": ["warn", { "max": 1, "maxEOF": 0, "maxBOF": 0 }],
+    "no-var": "error",
+    "no-self-compare": "error",
+    "no-unreachable-loop": "error",
+    "sort-keys": "warn",
+    "dot-notation": "warn"
+  }
+}

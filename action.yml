@@ -1,0 +1,16 @@
+name: 'Get C# project version'
+description: 'Reads C# project version from .csproj file'
+inputs:
+  file:
+    description: '.csproj file path'
+    required: true
+  validate:
+    description: 'true to validate version format, false to skip validation'
+    required: true
+    default: 'true'
+outputs:
+  varions:
+    description: 'Project version'
+runs:
+  using: 'node16'
+  main: 'dist/index.js'
