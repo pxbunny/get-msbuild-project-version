@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+
+    <Xd>abcd</Xd>
+    <Version>  1.0.0  </Version>
+
+
+  </PropertyGroup>
+
+</Project>
