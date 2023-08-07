@@ -2,7 +2,7 @@ import { getInput, setFailed, setOutput } from '@actions/core';
 import { readFile, getVersionFromFile } from './csproj';
 import {
   ensureFileNotEmpty,
-  ensureVersionNotEmtpy,
+  ensureVersionNotEmpty,
   validateFilePath,
   validateVersion
 } from './validation';
@@ -18,7 +18,7 @@ try {
 
   validate
     ? validateVersion(version)
-    : ensureVersionNotEmtpy(version);
+    : ensureVersionNotEmpty(version);
 
   setOutput('version', version);
 } catch (error) {

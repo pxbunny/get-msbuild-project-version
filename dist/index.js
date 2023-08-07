@@ -2848,7 +2848,7 @@ try {
 
   validate
     ? (0,_validation__WEBPACK_IMPORTED_MODULE_2__.validateVersion)(version)
-    : (0,_validation__WEBPACK_IMPORTED_MODULE_2__.ensureVersionNotEmtpy)(version);
+    : (0,_validation__WEBPACK_IMPORTED_MODULE_2__.ensureVersionNotEmpty)(version);
 
   (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.setOutput)('version', version);
 } catch (error) {

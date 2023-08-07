@@ -20,14 +20,14 @@ export const ensureFileNotEmpty = (file) => {
   }
 };
 
-export const ensureVersionNotEmtpy = (version) => {
+export const ensureVersionNotEmpty = (version) => {
   if (!version) {
     throw new Error('Version is empty');
   }
 };
 
 export const validateVersion = (version) => {
-  ensureVersionNotEmtpy(version);
+  ensureVersionNotEmpty(version);
 
   if (!version.match(/^\d+\.\d+\.\d+$/)) {
     throw new Error('Version must be in format x.y.z');
