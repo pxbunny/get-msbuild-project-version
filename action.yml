@@ -1,8 +1,8 @@
-name: 'Get C# project version'
-description: 'Reads C# project version from .csproj file'
+name: 'Get MSBuild project version'
+description: 'Reads MSBuild project version from .proj (.csproj, .vbproj, .dbproj, etc.) files'
 inputs:
   file:
-    description: '.csproj file path'
+    description: 'Project file path'
     required: true
   validate:
     description: 'true to validate version format, false to skip validation'

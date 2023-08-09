@@ -28,10 +28,6 @@ export function validateFilePath (path) {
     throw new ValidationError('Path is empty');
   }
 
-  if (!path.endsWith('.csproj')) {
-    throw new ValidationError('Path must end with .csproj');
-  }
-
   if (!existsSync(path)) {
     throw new ValidationError(`File ${path} does not exist`);
   }

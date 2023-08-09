@@ -22,12 +22,12 @@ describe('ensureVersionNotEmpty function', () => {
 
 describe('validateFilePath function', () => {
   const testCasesValid = [
-    'tests/TestFiles/Valid1_1.0.0.csproj',
-    'tests/TestFiles/Valid2_1.0.0.csproj',
-    'tests/TestFiles/Valid3_1.0.0.csproj',
-    'tests/TestFiles/Version_1.2.3-beta.csproj',
-    'tests/TestFiles/Version_1.2.3.4.csproj',
-    'tests/TestFiles/Version_2.1.3.csproj'
+    'tests/TestFiles/Valid1_1.0.0.proj',
+    'tests/TestFiles/Valid2_1.0.0.proj',
+    'tests/TestFiles/Valid3_1.0.0.proj',
+    'tests/TestFiles/Version_1.2.3-beta.proj',
+    'tests/TestFiles/Version_1.2.3.4.proj',
+    'tests/TestFiles/Version_2.1.3.proj'
   ];
   test.each(testCasesValid)('should validate correct file path %s', (path) => {
     validateFilePath(path);
@@ -35,7 +35,7 @@ describe('validateFilePath function', () => {
 
   const testCasesInvalid = [
     ' ',
-    'NonExistingFile.csproj',
+    'NonExistingFile.proj',
     'tests/TestFiles/file.xml',
   ];
   test.each(testCasesInvalid)('should throw a validation error on invalid file path %s', (path) => {
