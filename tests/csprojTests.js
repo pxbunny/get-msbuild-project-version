@@ -4,7 +4,7 @@ import { ValidationError } from '../src/validation';
 
 describe('readFile function', () => {
   it('should read existing file', () => {
-    const file = readFile('tests/TestFiles/ValidFile1_1.0.0.csproj');
+    const file = readFile('tests/TestFiles/Valid1_1.0.0.csproj');
     expect(typeof(file)).toBe('string');
     expect(file.length).not.toEqual(0);
   });
@@ -38,7 +38,7 @@ describe('getVersionFromFile function', () => {
 
   it('should return version from files', () => {
     const files = readdirSync('tests/TestFiles')
-      .filter(file => file.startsWith('ValidFile') &&
+      .filter(file => file.startsWith('Valid') &&
                       file.endsWith('.csproj' &&
                       file.includes('1.0.0')));
 
