@@ -2,7 +2,7 @@
   "name": "get-csproj-version",
   "type": "module",
   "scripts": {
-    "build": "ncc build src/index.js -o dist",
+    "build": "ncc build src/main.js -o dist",
     "test": "jest",
     "lint": "eslint . --ext .js",
     "lint:fix": "eslint . --fix --ext .js"
