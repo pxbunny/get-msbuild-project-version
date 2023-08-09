@@ -37,22 +37,6 @@ export function validateFilePath (path) {
   }
 }
 
-export function validateInput(input, type) {
-  if (isBlank(input)) {
-    throw new ValidationError('Input is empty');
-  }
-
-  if (type !== 'boolean') {
-    return;
-  }
-
-  const lowerCaseInput = input.toLowerCase();
-
-  if (lowerCaseInput !== 'true' && lowerCaseInput !== 'false') {
-    throw new ValidationError('Input must be true or false');
-  }
-}
-
 export function validateVersion(version) {
   ensureVersionNotEmpty(version);
 
