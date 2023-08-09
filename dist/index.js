@@ -2838,7 +2838,7 @@ var __webpack_exports__ = {};
 
 
 function getInputs() {
-  const path = (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput)('path');
+  const file = (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput)('file');
   const validate = (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput)('validate');
 
   const validateLowerCase = validate.toLowerCase();
@@ -2848,16 +2848,16 @@ function getInputs() {
   }
 
   return {
-    path,
+    file,
     validate: validateLowerCase === 'true'
   };
 }
 
 try {
-  const { path, validate } = getInputs();
+  const { file, validate } = getInputs();
 
-  const file = (0,_csproj__WEBPACK_IMPORTED_MODULE_1__.readFile)(path);
-  const version = (0,_csproj__WEBPACK_IMPORTED_MODULE_1__.getVersionFromFile)(file);
+  const fileContent = (0,_csproj__WEBPACK_IMPORTED_MODULE_1__.readFile)(file);
+  const version = (0,_csproj__WEBPACK_IMPORTED_MODULE_1__.getVersionFromFile)(fileContent);
 
   validate
     ? (0,_validation__WEBPACK_IMPORTED_MODULE_2__.validateVersion)(version)

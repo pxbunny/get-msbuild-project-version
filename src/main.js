@@ -3,7 +3,7 @@ import { readFile, getVersionFromFile } from './csproj';
 import { ensureVersionNotEmpty, validateVersion } from './validation';
 
 function getInputs() {
-  const path = getInput('path');
+  const file = getInput('file');
   const validate = getInput('validate');
 
   const validateLowerCase = validate.toLowerCase();
@@ -13,16 +13,16 @@ function getInputs() {
   }
 
   return {
-    path,
+    file,
     validate: validateLowerCase === 'true'
   };
 }
 
 try {
-  const { path, validate } = getInputs();
+  const { file, validate } = getInputs();
 
-  const file = readFile(path);
-  const version = getVersionFromFile(file);
+  const fileContent = readFile(file);
+  const version = getVersionFromFile(fileContent);
 
   validate
     ? validateVersion(version)

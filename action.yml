@@ -6,7 +6,7 @@ inputs:
     required: true
   validate:
     description: 'true to validate version format, false to skip validation'
-    required: true
+    required: false
     default: 'true'
 outputs:
   varions:
