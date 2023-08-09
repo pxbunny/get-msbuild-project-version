@@ -2704,6 +2704,14 @@ module.exports = eval("require")("./csproj");
 
 /***/ }),
 
+/***/ 573:
+/***/ ((module) => {
+
+module.exports = eval("require")("./input");
+
+
+/***/ }),
+
 /***/ 997:
 /***/ ((module) => {
 
@@ -2832,23 +2840,25 @@ var __webpack_exports__ = {};
 (() => {
 /* harmony import */ var _actions_core__WEBPACK_IMPORTED_MODULE_0__ = __nccwpck_require__(186);
 /* harmony import */ var _csproj__WEBPACK_IMPORTED_MODULE_1__ = __nccwpck_require__(579);
-/* harmony import */ var _validation__WEBPACK_IMPORTED_MODULE_2__ = __nccwpck_require__(997);
+/* harmony import */ var _input__WEBPACK_IMPORTED_MODULE_2__ = __nccwpck_require__(573);
+/* harmony import */ var _validation__WEBPACK_IMPORTED_MODULE_3__ = __nccwpck_require__(997);
+
 
 
 
 
 try {
-  const path = (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput)('path');
-  const validate = (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput)('validate').toLowerCase() === 'true';
+  const [path, validateInputs] = (0,_input__WEBPACK_IMPORTED_MODULE_2__.getAndValidateInputs)([
+    { name: 'path', type: 'string' },
+    { name: 'validate', type: 'boolean' }
+  ]);
 
-  (0,_validation__WEBPACK_IMPORTED_MODULE_2__.validateFilePath)(path);
   const file = (0,_csproj__WEBPACK_IMPORTED_MODULE_1__.readFile)(path);
-  (0,_validation__WEBPACK_IMPORTED_MODULE_2__.ensureFileNotEmpty)(file);
   const version = (0,_csproj__WEBPACK_IMPORTED_MODULE_1__.getVersionFromFile)(file);
 
-  validate
-    ? (0,_validation__WEBPACK_IMPORTED_MODULE_2__.validateVersion)(version)
-    : (0,_validation__WEBPACK_IMPORTED_MODULE_2__.ensureVersionNotEmpty)(version);
+  validateInputs
+    ? (0,_validation__WEBPACK_IMPORTED_MODULE_3__.validateVersion)(version)
+    : (0,_validation__WEBPACK_IMPORTED_MODULE_3__.ensureVersionNotEmpty)(version);
 
   (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.setOutput)('version', version);
 } catch (error) {

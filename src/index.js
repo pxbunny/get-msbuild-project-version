@@ -1,22 +1,18 @@
-import { getInput, setFailed, setOutput } from '@actions/core';
+import { setFailed, setOutput } from '@actions/core';
 import { readFile, getVersionFromFile } from './csproj';
-import {
-  ensureFileNotEmpty,
-  ensureVersionNotEmpty,
-  validateFilePath,
-  validateVersion
-} from './validation';
+import { getAndValidateInputs } from './input';
+import { ensureVersionNotEmpty, validateVersion } from './validation';
 
 try {
-  const path = getInput('path');
-  const validate = getInput('validate').toLowerCase() === 'true';
+  const [path, validateInputs] = getAndValidateInputs([
+    { name: 'path', type: 'string' },
+    { name: 'validate', type: 'boolean' }
+  ]);
 
-  validateFilePath(path);
   const file = readFile(path);
-  ensureFileNotEmpty(file);
   const version = getVersionFromFile(file);
 
-  validate
+  validateInputs
     ? validateVersion(version)
     : ensureVersionNotEmpty(version);
 

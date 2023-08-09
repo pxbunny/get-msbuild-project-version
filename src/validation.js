@@ -1,35 +1,62 @@
 import { existsSync } from 'fs';
 
-export const validateFilePath = (path) => {
-  if (!path) {
-    throw new Error('Path is empty');
+export class ValidationError extends Error {
+  constructor(message) {
+    super(message);
+    this.name = 'ValidationError';
+  }
+}
+
+function isBlank (str) {
+  return (!str || /^\s*$/.test(str));
+}
+
+export function ensureFileNotEmpty(file) {
+  if (isBlank(file)) {
+    throw new ValidationError('File is empty');
+  }
+}
+
+export function ensureVersionNotEmpty(version) {
+  if (isBlank(version)) {
+    throw new ValidationError('Version is empty');
+  }
+}
+
+export function validateFilePath (path) {
+  if (isBlank(path)) {
+    throw new ValidationError('Path is empty');
   }
 
   if (!path.endsWith('.csproj')) {
-    throw new Error('Path must end with .csproj');
+    throw new ValidationError('Path must end with .csproj');
   }
 
   if (!existsSync(path)) {
-    throw new Error(`File ${path} does not exist`);
+    throw new ValidationError(`File ${path} does not exist`);
   }
-};
+}
 
-export const ensureFileNotEmpty = (file) => {
-  if (!file) {
-    throw new Error('File is empty');
+export function validateInput(input, type) {
+  if (isBlank(input)) {
+    throw new ValidationError('Input is empty');
   }
-};
 
-export const ensureVersionNotEmpty = (version) => {
-  if (!version) {
-    throw new Error('Version is empty');
+  if (type !== 'boolean') {
+    return;
   }
-};
 
-export const validateVersion = (version) => {
+  const lowerCaseInput = input.toLowerCase();
+
+  if (lowerCaseInput !== 'true' && lowerCaseInput !== 'false') {
+    throw new ValidationError('Input must be true or false');
+  }
+}
+
+export function validateVersion(version) {
   ensureVersionNotEmpty(version);
 
   if (!version.match(/^\d+\.\d+\.\d+$/)) {
-    throw new Error('Version must be in format x.y.z');
+    throw new ValidationError('Version must be in format x.y.z');
   }
-};
+}

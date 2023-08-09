@@ -9,7 +9,8 @@
     "sourceType": "module"
   },
   "rules": {
-    "indent": ["warn", 2],
+    "max-len": ["warn", { "code": 80 }],
+    "indent": ["warn", 2, { "SwitchCase": 1 }],
     "linebreak-style": ["error", "unix"],
     "quotes": ["warn", "single"],
     "semi": ["warn", "always"],
@@ -27,7 +28,9 @@
     "no-var": "error",
     "no-self-compare": "error",
     "no-unreachable-loop": "error",
-    "sort-keys": "warn",
-    "dot-notation": "warn"
+    "dot-notation": "warn",
+    "object-curly-spacing": ["warn", "always"],
+    "comma-spacing": "warn",
+    "arrow-parens": ["warn", "always"]
   }
 }
