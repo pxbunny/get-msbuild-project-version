@@ -2704,14 +2704,6 @@ module.exports = eval("require")("./csproj");
 
 /***/ }),
 
-/***/ 573:
-/***/ ((module) => {
-
-module.exports = eval("require")("./input");
-
-
-/***/ }),
-
 /***/ 997:
 /***/ ((module) => {
 
@@ -2840,25 +2832,36 @@ var __webpack_exports__ = {};
 (() => {
 /* harmony import */ var _actions_core__WEBPACK_IMPORTED_MODULE_0__ = __nccwpck_require__(186);
 /* harmony import */ var _csproj__WEBPACK_IMPORTED_MODULE_1__ = __nccwpck_require__(579);
-/* harmony import */ var _input__WEBPACK_IMPORTED_MODULE_2__ = __nccwpck_require__(573);
-/* harmony import */ var _validation__WEBPACK_IMPORTED_MODULE_3__ = __nccwpck_require__(997);
+/* harmony import */ var _validation__WEBPACK_IMPORTED_MODULE_2__ = __nccwpck_require__(997);
 
 
 
 
+function getInputs() {
+  const path = (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput)('path');
+  const validate = (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput)('validate');
+
+  const validateLowerCase = validate.toLowerCase();
+
+  if (validateLowerCase !== 'true' && validateLowerCase !== 'false') {
+    throw new Error('Input validate must be true or false');
+  }
+
+  return {
+    path,
+    validate: validateLowerCase === 'true'
+  };
+}
 
 try {
-  const [path, validateInputs] = (0,_input__WEBPACK_IMPORTED_MODULE_2__.getAndValidateInputs)([
-    { name: 'path', type: 'string' },
-    { name: 'validate', type: 'boolean' }
-  ]);
+  const { path, validate } = getInputs();
 
   const file = (0,_csproj__WEBPACK_IMPORTED_MODULE_1__.readFile)(path);
   const version = (0,_csproj__WEBPACK_IMPORTED_MODULE_1__.getVersionFromFile)(file);
 
-  validateInputs
-    ? (0,_validation__WEBPACK_IMPORTED_MODULE_3__.validateVersion)(version)
-    : (0,_validation__WEBPACK_IMPORTED_MODULE_3__.ensureVersionNotEmpty)(version);
+  validate
+    ? (0,_validation__WEBPACK_IMPORTED_MODULE_2__.validateVersion)(version)
+    : (0,_validation__WEBPACK_IMPORTED_MODULE_2__.ensureVersionNotEmpty)(version);
 
   (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.setOutput)('version', version);
 } catch (error) {

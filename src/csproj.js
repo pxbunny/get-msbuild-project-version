@@ -11,5 +11,6 @@ export function readFile(path) {
 export function getVersionFromFile(file) {
   ensureFileNotEmpty(file);
   const doc = new DOMParser().parseFromString(file, 'text/xml');
-  return xpath.select('string(/Project/PropertyGroup/Version)', doc).trim();
+  const pattern = 'string(/Project/PropertyGroup/Version)';
+  return xpath.select(pattern, doc).trim();
 }
