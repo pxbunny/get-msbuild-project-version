@@ -1,6 +1,5 @@
 {
   "name": "get-csproj-version",
-  "type": "module",
   "scripts": {
     "build": "ncc build src/main.js -o dist",
     "test": "jest",
