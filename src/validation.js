@@ -40,7 +40,7 @@ export function validateFilePath (path) {
 export function validateVersion(version) {
   ensureVersionNotEmpty(version);
 
-  if (!version.match(/^\d+\.\d+\.\d+(\.\d+)?(-[^ ]+)?$/)) {
+  if (!version.match(/^(\d+\.){0,3}\d+(-[0-9A-Za-z-]+)?$/)) {
     throw new ValidationError('Wrong version format');
   }
 }

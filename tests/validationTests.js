@@ -46,11 +46,13 @@ describe('validateFilePath function', () => {
 
 describe('validateVersion function', () => {
   const testCasesValid = [
+    '1',
+    '1.0',
     '1.0.0',
     '1.0.0.1',
     '1.0.0.1-beta',
     '1.0.0-alpha',
-    '1.0.0-alpha.1',
+    '1.0.0-alpha-1',
     '111.100.100',
     '1.2.3-beta',
     '1.2.3.4'
@@ -60,10 +62,10 @@ describe('validateVersion function', () => {
   });
 
   const testCasesInvalid = [
-    '1.0',
+    '1.',
     ' 2.0.0',
     '3.0.0 ',
-    '4-2-3',
+    '4,0,0',
     '5version',
     '6.1.2asdfasdf'
   ];
