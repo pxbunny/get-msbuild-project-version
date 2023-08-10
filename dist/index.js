@@ -1,4 +1,3 @@
-import { createRequire as __WEBPACK_EXTERNAL_createRequire } from "module";
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
@@ -6362,10 +6361,9 @@ exports.entityMap = exports.HTML_ENTITIES;
 /***/ 213:
 /***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
-var __webpack_unused_export__;
 var dom = __nccwpck_require__(389)
-__webpack_unused_export__ = dom.DOMImplementation
-__webpack_unused_export__ = dom.XMLSerializer
+exports.DOMImplementation = dom.DOMImplementation
+exports.XMLSerializer = dom.XMLSerializer
 exports.DOMParser = __nccwpck_require__(72).DOMParser
 
 
@@ -12911,11 +12909,89 @@ var xpath = ( false) ? 0 : exports;
 
 /***/ }),
 
+/***/ 401:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.getVersionFromFile = exports.readFile = void 0;
+const fs_1 = __nccwpck_require__(147);
+const xmldom_1 = __nccwpck_require__(213);
+const xpath_1 = __nccwpck_require__(319);
+const validation_1 = __nccwpck_require__(875);
+function readFile(path) {
+    (0, validation_1.validateFilePath)(path);
+    return (0, fs_1.readFileSync)(path, 'utf8');
+}
+exports.readFile = readFile;
+function getVersionFromFile(file) {
+    (0, validation_1.ensureFileNotEmpty)(file);
+    const doc = new xmldom_1.DOMParser().parseFromString(file, 'text/xml');
+    const pattern = 'string(/Project/PropertyGroup/Version)';
+    const version = (0, xpath_1.select)(pattern, doc);
+    return version.trim();
+}
+exports.getVersionFromFile = getVersionFromFile;
+
+
+/***/ }),
+
+/***/ 875:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.validateVersion = exports.validateFilePath = exports.ensureVersionNotEmpty = exports.ensureFileNotEmpty = exports.ValidationError = void 0;
+const fs_1 = __nccwpck_require__(147);
+class ValidationError extends Error {
+    constructor(message) {
+        super(message);
+        this.name = 'ValidationError';
+    }
+}
+exports.ValidationError = ValidationError;
+function isBlank(str) {
+    return (!str || /^\s*$/.test(str));
+}
+function ensureFileNotEmpty(file) {
+    if (isBlank(file)) {
+        throw new ValidationError('File is empty');
+    }
+}
+exports.ensureFileNotEmpty = ensureFileNotEmpty;
+function ensureVersionNotEmpty(version) {
+    if (isBlank(version)) {
+        throw new ValidationError('Version is empty');
+    }
+}
+exports.ensureVersionNotEmpty = ensureVersionNotEmpty;
+function validateFilePath(path) {
+    if (isBlank(path)) {
+        throw new ValidationError('Path is empty');
+    }
+    if (!(0, fs_1.existsSync)(path)) {
+        throw new ValidationError(`File ${path} does not exist`);
+    }
+}
+exports.validateFilePath = validateFilePath;
+function validateVersion(version) {
+    ensureVersionNotEmpty(version);
+    if (!version.match(/^(\d+\.){0,3}\d+(-[0-9A-Za-z-]+)?$/)) {
+        throw new ValidationError('Wrong version format');
+    }
+}
+exports.validateVersion = validateVersion;
+
+
+/***/ }),
+
 /***/ 491:
 /***/ ((module) => {
 
 "use strict";
-module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("assert");
+module.exports = require("assert");
 
 /***/ }),
 
@@ -12923,7 +12999,7 @@ module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("assert");
 /***/ ((module) => {
 
 "use strict";
-module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("crypto");
+module.exports = require("crypto");
 
 /***/ }),
 
@@ -12931,7 +13007,7 @@ module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("crypto");
 /***/ ((module) => {
 
 "use strict";
-module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("events");
+module.exports = require("events");
 
 /***/ }),
 
@@ -12939,7 +13015,7 @@ module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("events");
 /***/ ((module) => {
 
 "use strict";
-module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("fs");
+module.exports = require("fs");
 
 /***/ }),
 
@@ -12947,7 +13023,7 @@ module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("fs");
 /***/ ((module) => {
 
 "use strict";
-module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("http");
+module.exports = require("http");
 
 /***/ }),
 
@@ -12955,7 +13031,7 @@ module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("http");
 /***/ ((module) => {
 
 "use strict";
-module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("https");
+module.exports = require("https");
 
 /***/ }),
 
@@ -12963,7 +13039,7 @@ module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("https");
 /***/ ((module) => {
 
 "use strict";
-module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("net");
+module.exports = require("net");
 
 /***/ }),
 
@@ -12971,7 +13047,7 @@ module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("net");
 /***/ ((module) => {
 
 "use strict";
-module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("os");
+module.exports = require("os");
 
 /***/ }),
 
@@ -12979,7 +13055,7 @@ module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("os");
 /***/ ((module) => {
 
 "use strict";
-module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("path");
+module.exports = require("path");
 
 /***/ }),
 
@@ -12987,7 +13063,7 @@ module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("path");
 /***/ ((module) => {
 
 "use strict";
-module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("tls");
+module.exports = require("tls");
 
 /***/ }),
 
@@ -12995,7 +13071,7 @@ module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("tls");
 /***/ ((module) => {
 
 "use strict";
-module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("util");
+module.exports = require("util");
 
 /***/ })
 
@@ -13032,46 +13108,6 @@ module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("util");
 /******/ 	}
 /******/ 	
 /************************************************************************/
-/******/ 	/* webpack/runtime/compat get default export */
-/******/ 	(() => {
-/******/ 		// getDefaultExport function for compatibility with non-harmony modules
-/******/ 		__nccwpck_require__.n = (module) => {
-/******/ 			var getter = module && module.__esModule ?
-/******/ 				() => (module['default']) :
-/******/ 				() => (module);
-/******/ 			__nccwpck_require__.d(getter, { a: getter });
-/******/ 			return getter;
-/******/ 		};
-/******/ 	})();
-/******/ 	
-/******/ 	/* webpack/runtime/define property getters */
-/******/ 	(() => {
-/******/ 		// define getter functions for harmony exports
-/******/ 		__nccwpck_require__.d = (exports, definition) => {
-/******/ 			for(var key in definition) {
-/******/ 				if(__nccwpck_require__.o(definition, key) && !__nccwpck_require__.o(exports, key)) {
-/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
-/******/ 				}
-/******/ 			}
-/******/ 		};
-/******/ 	})();
-/******/ 	
-/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
-/******/ 	(() => {
-/******/ 		__nccwpck_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
-/******/ 	})();
-/******/ 	
-/******/ 	/* webpack/runtime/make namespace object */
-/******/ 	(() => {
-/******/ 		// define __esModule on exports
-/******/ 		__nccwpck_require__.r = (exports) => {
-/******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
-/******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
-/******/ 			}
-/******/ 			Object.defineProperty(exports, '__esModule', { value: true });
-/******/ 		};
-/******/ 	})();
-/******/ 	
 /******/ 	/* webpack/runtime/compat */
 /******/ 	
 /******/ 	if (typeof __nccwpck_require__ !== 'undefined') __nccwpck_require__.ab = __dirname + "/";
@@ -13081,114 +13117,35 @@ var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be in strict mode.
 (() => {
 "use strict";
-// ESM COMPAT FLAG
-__nccwpck_require__.r(__webpack_exports__);
+var exports = __webpack_exports__;
 
-// EXTERNAL MODULE: ./node_modules/@actions/core/lib/core.js
-var core = __nccwpck_require__(186);
-// EXTERNAL MODULE: external "fs"
-var external_fs_ = __nccwpck_require__(147);
-// EXTERNAL MODULE: ./node_modules/@xmldom/xmldom/lib/index.js
-var lib = __nccwpck_require__(213);
-// EXTERNAL MODULE: ./node_modules/xpath/xpath.js
-var xpath = __nccwpck_require__(319);
-var xpath_default = /*#__PURE__*/__nccwpck_require__.n(xpath);
-;// CONCATENATED MODULE: ./src/validation.js
-
-
-class ValidationError extends Error {
-  constructor(message) {
-    super(message);
-    this.name = 'ValidationError';
-  }
-}
-
-function isBlank (str) {
-  return (!str || /^\s*$/.test(str));
-}
-
-function ensureFileNotEmpty(file) {
-  if (isBlank(file)) {
-    throw new ValidationError('File is empty');
-  }
-}
-
-function ensureVersionNotEmpty(version) {
-  if (isBlank(version)) {
-    throw new ValidationError('Version is empty');
-  }
-}
-
-function validateFilePath (path) {
-  if (isBlank(path)) {
-    throw new ValidationError('Path is empty');
-  }
-
-  if (!(0,external_fs_.existsSync)(path)) {
-    throw new ValidationError(`File ${path} does not exist`);
-  }
-}
-
-function validateVersion(version) {
-  ensureVersionNotEmpty(version);
-
-  if (!version.match(/^(\d+\.){0,3}\d+(-[0-9A-Za-z-]+)?$/)) {
-    throw new ValidationError('Wrong version format');
-  }
-}
-
-;// CONCATENATED MODULE: ./src/csproj.js
-
-
-
-
-
-function readFile(path) {
-  validateFilePath(path);
-  return (0,external_fs_.readFileSync)(path, 'utf8');
-}
-
-function getVersionFromFile(file) {
-  ensureFileNotEmpty(file);
-  const doc = new lib.DOMParser().parseFromString(file, 'text/xml');
-  const pattern = 'string(/Project/PropertyGroup/Version)';
-  return xpath_default().select(pattern, doc).trim();
-}
-
-;// CONCATENATED MODULE: ./src/main.js
-
-
-
-
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+const core_1 = __nccwpck_require__(186);
+const csproj_1 = __nccwpck_require__(401);
+const validation_1 = __nccwpck_require__(875);
 function getInputs() {
-  const file = (0,core.getInput)('file');
-  const validate = (0,core.getInput)('validate');
-
-  const validateLowerCase = validate.toLowerCase();
-
-  if (validateLowerCase !== 'true' && validateLowerCase !== 'false') {
-    throw new Error('Input validate must be true or false');
-  }
-
-  return {
-    file,
-    validate: validateLowerCase === 'true'
-  };
+    const file = (0, core_1.getInput)('file');
+    const validate = (0, core_1.getInput)('validate');
+    const validateLowerCase = validate.toLowerCase();
+    if (validateLowerCase !== 'true' && validateLowerCase !== 'false') {
+        throw new Error('Input validate must be true or false');
+    }
+    return {
+        file,
+        validate: validateLowerCase === 'true'
+    };
 }
-
 try {
-  const { file, validate } = getInputs();
-
-  const fileContent = readFile(file);
-  const version = getVersionFromFile(fileContent);
-
-  validate
-    ? validateVersion(version)
-    : ensureVersionNotEmpty(version);
-
-  (0,core.setOutput)('version', version);
-} catch (error) {
-  (0,core.setFailed)(error.message);
+    const { file, validate } = getInputs();
+    const fileContent = (0, csproj_1.readFile)(file);
+    const version = (0, csproj_1.getVersionFromFile)(fileContent);
+    validate
+        ? (0, validation_1.validateVersion)(version)
+        : (0, validation_1.ensureVersionNotEmpty)(version);
+    (0, core_1.setOutput)('version', version);
+}
+catch (error) {
+    (0, core_1.setFailed)(error.message);
 }
 
 })();
