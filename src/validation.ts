@@ -7,23 +7,23 @@ export class ValidationError extends Error {
   }
 }
 
-function isBlank (str: string) {
+function isBlank (str: string): boolean {
   return (!str || /^\s*$/.test(str));
 }
 
-export function ensureFileNotEmpty(file: string) {
+export function ensureFileNotEmpty(file: string): void {
   if (isBlank(file)) {
     throw new ValidationError('File is empty');
   }
 }
 
-export function ensureVersionNotEmpty(version: string) {
+export function ensureVersionNotEmpty(version: string): void {
   if (isBlank(version)) {
     throw new ValidationError('Version is empty');
   }
 }
 
-export function validateFilePath (path: string) {
+export function validateFilePath (path: string): void {
   if (isBlank(path)) {
     throw new ValidationError('Path is empty');
   }
@@ -33,7 +33,7 @@ export function validateFilePath (path: string) {
   }
 }
 
-export function validateVersion(version: string) {
+export function validateVersion(version: string): void {
   ensureVersionNotEmpty(version);
 
   if (!version.match(/^(\d+\.){0,3}\d+(-[0-9A-Za-z-]+)?$/)) {

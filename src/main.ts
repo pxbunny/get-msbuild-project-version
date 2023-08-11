@@ -2,7 +2,12 @@ import { getInput, setFailed, setOutput } from '@actions/core';
 import { readFile, getVersionFromFile } from './csproj';
 import { ensureVersionNotEmpty, validateVersion } from './validation';
 
-function getInputs() {
+type Inputs = {
+  file: string;
+  validate: boolean;
+};
+
+function getInputs(): Inputs {
   const file = getInput('file');
   const validate = getInput('validate');
 

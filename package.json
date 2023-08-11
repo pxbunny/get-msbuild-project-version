@@ -13,7 +13,7 @@
     }
   },
   "lint-staged": {
-    "*.ts": "npm run lint:fix"
+    "*.ts": "npm run lint"
   },
   "dependencies": {
     "@actions/core": "^1.10.0",
