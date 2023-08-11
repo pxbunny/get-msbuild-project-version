@@ -9,7 +9,7 @@ inputs:
     required: false
     default: 'true'
 outputs:
-  varions:
+  version:
     description: 'Project version'
 runs:
   using: 'node16'
