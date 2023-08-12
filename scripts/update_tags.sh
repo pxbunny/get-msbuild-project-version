@@ -2,6 +2,7 @@
 
 echo "Fetching tags..."
 
+git tag | xargs git tag -d
 git pull --tags
 
 tag=`git tag --sort=-v:refname | head -n 1`
@@ -50,7 +51,7 @@ function update_tags {
   do
     tag="${tag%.*}"
     echo $tag
-    git tag -f -a -m "Updating tag $tag using $version" $version
+    git tag -f -a -m "Updating tag $tag using $version" $tag
     git push origin $tag --no-verify
   done
 
