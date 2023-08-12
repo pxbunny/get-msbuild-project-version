@@ -2,7 +2,6 @@
 
 echo "Fetching tags..."
 
-# no output
 git tag | xargs git tag -d > /dev/null
 git pull --tags --quiet
 
