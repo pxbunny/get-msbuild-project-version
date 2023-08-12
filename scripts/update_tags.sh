@@ -31,8 +31,8 @@ new_minor=$((minor + 1))
 new_major=$((major + 1))
 
 new_version_patch="v${major}.${minor}.${new_patch}"
-new_version_minor="v${major}.${new_minor}.${patch}"
-new_version_major="v${new_major}.${minor}.${patch}"
+new_version_minor="v${major}.${new_minor}.0"
+new_version_major="v${new_major}.0.0"
 
 function update_tags {
   version=$1
@@ -52,7 +52,7 @@ function update_tags {
     tag="${tag%.*}"
     echo $tag
     git tag -f -a -m "Updating tag $tag using $version" $tag
-    git push origin $tag --no-verify
+    git push origin $tag --force --no-verify
   done
 
   echo "Tags updated successfully"
