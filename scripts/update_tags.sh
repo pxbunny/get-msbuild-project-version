@@ -2,6 +2,8 @@
 
 echo "Fetching tags..."
 
+git pull --tags
+
 tag=`git tag --sort=-v:refname | head -n 1`
 
 if [[ -z $tag ]]; then
@@ -39,16 +41,16 @@ function update_tags {
   echo "Updating tags..."
 
   echo $version
-  # git tag -a -m "Release $version" $version
-  # git push origin $version
+  git tag -a -m "Release $version" $version
+  git push origin $version
   tag=$version
 
   for i in {1..2}
   do
     tag="${tag%.*}"
     echo $tag
-    # git tag -f -a -m "Updating tag $tag using $version" $version
-    # git push origin $version
+    git tag -f -a -m "Updating tag $tag using $version" $version
+    git push origin $version
   done
 
   echo "Tags updated successfully"

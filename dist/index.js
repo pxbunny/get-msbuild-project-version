@@ -12978,7 +12978,7 @@ function validateFilePath(path) {
 exports.validateFilePath = validateFilePath;
 function validateVersion(version) {
     ensureVersionNotEmpty(version);
-    if (!version.match(/^(\d+\.){0,3}\d+(-[0-9A-Za-z-]+)?$/)) {
+    if (!version.match(/^([0-9]+\.){0,3}[0-9]+(-[0-9A-Za-z-]+)?$/)) {
         throw new ValidationError('Wrong version format');
     }
 }
