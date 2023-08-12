@@ -2,22 +2,25 @@
 
 echo "Fetching tags..."
 
-git tag | xargs git tag -d
-git pull --tags
+# no output
+git tag | xargs git tag -d > /dev/null
+git pull --tags --quiet
 
 tag=`git tag --sort=-v:refname | head -n 1`
 
 if [[ -z $tag ]]; then
+  echo
   echo "No tags found. Using v0.0.0"
   tag="v0.0.0"
 fi
 
 if [[ ! $tag =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
-  echo "Invalid tag format: $tag"
+  echo
+  echo "Invalid version format: $tag"
   exit 1
 fi
 
-echo "Current tag: $tag"
+echo "Current version: $tag"
 echo
 
 tag_components=($(echo "${tag#v}" | tr '.' ' '))
@@ -44,7 +47,7 @@ function update_tags {
 
   echo $version
   git tag -a -m "Release $version" $version
-  git push origin $version
+  git push origin $version --quiet
   tag=$version
 
   for i in {1..2}
@@ -52,7 +55,7 @@ function update_tags {
     tag="${tag%.*}"
     echo $tag
     git tag -f -a -m "Updating tag $tag using $version" $tag
-    git push origin $tag --force --no-verify
+    git push origin $tag --force --no-verify --quiet
   done
 
   echo "Tags updated successfully"
