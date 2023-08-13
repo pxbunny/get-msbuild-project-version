@@ -29,9 +29,11 @@ try {
   const fileContent = readFile(file);
   const version = getVersionFromFile(fileContent);
 
-  validate
-    ? validateVersion(version)
-    : ensureVersionNotEmpty(version);
+  if (validate) {
+    validateVersion(version);
+  } else {
+    ensureVersionNotEmpty(version);
+  }
 
   setOutput('version', version);
 } catch (error) {

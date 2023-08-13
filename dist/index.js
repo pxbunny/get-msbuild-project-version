@@ -13139,9 +13139,12 @@ try {
     const { file, validate } = getInputs();
     const fileContent = (0, csproj_1.readFile)(file);
     const version = (0, csproj_1.getVersionFromFile)(fileContent);
-    validate
-        ? (0, validation_1.validateVersion)(version)
-        : (0, validation_1.ensureVersionNotEmpty)(version);
+    if (validate) {
+        (0, validation_1.validateVersion)(version);
+    }
+    else {
+        (0, validation_1.ensureVersionNotEmpty)(version);
+    }
     (0, core_1.setOutput)('version', version);
 }
 catch (error) {
