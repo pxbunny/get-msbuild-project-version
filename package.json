@@ -5,7 +5,7 @@
     "test": "jest",
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint . --fix --ext .ts",
-    "tag:bash": "bash ./scripts/update_tags.sh"
+    "tag:bash": "git submodule update && bash ./update-tags-script/update_tags.sh"
   },
   "husky": {
     "hooks": {
