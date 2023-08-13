@@ -12953,7 +12953,7 @@ class ValidationError extends Error {
 }
 exports.ValidationError = ValidationError;
 function isBlank(str) {
-    return (!str || /^\s*$/.test(str));
+    return !str || /^\s*$/.test(str);
 }
 function ensureFileNotEmpty(file) {
     if (isBlank(file)) {

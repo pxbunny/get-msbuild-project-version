@@ -7,8 +7,8 @@ export class ValidationError extends Error {
   }
 }
 
-function isBlank (str: string): boolean {
-  return (!str || /^\s*$/.test(str));
+function isBlank(str: string): boolean {
+  return !str || /^\s*$/.test(str);
 }
 
 export function ensureFileNotEmpty(file: string): void {
@@ -23,7 +23,7 @@ export function ensureVersionNotEmpty(version: string): void {
   }
 }
 
-export function validateFilePath (path: string): void {
+export function validateFilePath(path: string): void {
   if (isBlank(path)) {
     throw new ValidationError('Path is empty');
   }
