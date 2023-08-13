@@ -12916,8 +12916,8 @@ var xpath = ( false) ? 0 : exports;
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.getVersionFromFile = exports.readFile = void 0;
-const fs_1 = __nccwpck_require__(147);
 const xmldom_1 = __nccwpck_require__(213);
+const fs_1 = __nccwpck_require__(147);
 const xpath_1 = __nccwpck_require__(319);
 const validation_1 = __nccwpck_require__(875);
 function readFile(path) {

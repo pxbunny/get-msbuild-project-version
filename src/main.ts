@@ -1,5 +1,6 @@
 import { getInput, setFailed, setOutput } from '@actions/core';
-import { readFile, getVersionFromFile } from './csproj';
+
+import { getVersionFromFile, readFile } from './csproj';
 import { ensureVersionNotEmpty, validateVersion } from './validation';
 
 type Inputs = {

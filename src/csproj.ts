@@ -1,6 +1,7 @@
-import { readFileSync } from 'fs';
 import { DOMParser } from '@xmldom/xmldom';
+import { readFileSync } from 'fs';
 import { select } from 'xpath';
+
 import { ensureFileNotEmpty, validateFilePath } from './validation';
 
 export function readFile(path: string): string {
