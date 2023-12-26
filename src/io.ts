@@ -19,20 +19,12 @@ export function getInputs(): Inputs {
   const file = getInput('file');
 
   const validateAll = getInput('validate-all').toLowerCase();
-  const validateVersionPrefix = getInput(
-    'validate-version-prefix'
-  ).toLowerCase();
-  const validateVersionSuffix = getInput(
-    'validate-version-suffix'
-  ).toLowerCase();
+  const validateVersionPrefix = getInput('validate-version-prefix').toLowerCase();
+  const validateVersionSuffix = getInput('validate-version-suffix').toLowerCase();
   const validateVersion = getInput('validate-version').toLowerCase();
-  const validateAssemblyVersion = getInput(
-    'validate-assembly-version'
-  ).toLowerCase();
+  const validateAssemblyVersion = getInput('validate-assembly-version').toLowerCase();
   const validateFileVersion = getInput('validate-file-version').toLowerCase();
-  const validatePackageVersion = getInput(
-    'validate-package-version'
-  ).toLowerCase();
+  const validatePackageVersion = getInput('validate-package-version').toLowerCase();
 
   return {
     file,

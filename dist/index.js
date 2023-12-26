@@ -13019,16 +13019,12 @@ function validateVersions(validationInputs, versions) {
     const shouldAssemblyVersionBeValidated = !!validateAll || !!validateAssemblyVersion;
     const shouldFileVersionBeValidated = !!validateAll || !!validateFileVersion;
     const shouldPackageVersionBeValidated = !!validateAll || !!validatePackageVersion;
-    shouldVersionPrefixBeValidated &&
-        validator.validateVersionPrefix(versionPrefix);
-    shouldVersionSuffixBeValidated &&
-        validator.validateVersionSuffix(versionSuffix);
+    shouldVersionPrefixBeValidated && validator.validateVersionPrefix(versionPrefix);
+    shouldVersionSuffixBeValidated && validator.validateVersionSuffix(versionSuffix);
     shouldVersionBeValidated && validator.validateVersion(version);
-    shouldAssemblyVersionBeValidated &&
-        validator.validateAssemblyVersion(assemblyVersion);
+    shouldAssemblyVersionBeValidated && validator.validateAssemblyVersion(assemblyVersion);
     shouldFileVersionBeValidated && validator.validateFileVersion(fileVersion);
-    shouldPackageVersionBeValidated &&
-        validator.validatePackageVersion(packageVersion);
+    shouldPackageVersionBeValidated && validator.validatePackageVersion(packageVersion);
 }
 try {
     const _a = (0, io_1.getInputs)(), { file } = _a, validationInputs = __rest(_a, ["file"]);
@@ -13075,9 +13071,7 @@ class MsBuild {
         const versionPrefix = MsBuild.getVersion(doc, 'VersionPrefix', '1.0.0');
         const versionSuffix = MsBuild.getVersion(doc, 'VersionSuffix', '');
         const version = MsBuild.getVersion(doc, 'Version', versionSuffix ? `${versionPrefix}-${versionSuffix}` : versionPrefix);
-        const assemblyVersion = MsBuild.getVersion(doc, 'AssemblyVersion', versionPrefix.split('.').length === 3
-            ? `${versionPrefix}.0`
-            : versionPrefix);
+        const assemblyVersion = MsBuild.getVersion(doc, 'AssemblyVersion', versionPrefix.split('.').length === 3 ? `${versionPrefix}.0` : versionPrefix);
         const fileVersion = MsBuild.getVersion(doc, 'FileVersion', assemblyVersion);
         const informationalVersion = MsBuild.getVersion(doc, 'InformationalVersion', version);
         const packageVersion = MsBuild.getVersion(doc, 'PackageVersion', version);

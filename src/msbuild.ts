@@ -28,11 +28,7 @@ export class MsBuild {
     return new MsBuild(fileContent);
   }
 
-  private static getVersion(
-    doc: Document,
-    propertyName: string,
-    defaultValue: string
-  ): string {
+  private static getVersion(doc: Document, propertyName: string, defaultValue: string): string {
     const pattern = `string(/Project/PropertyGroup/${propertyName})`;
     const version = select(pattern, doc) as string;
     return version ? version.trim() : defaultValue;
@@ -51,16 +47,10 @@ export class MsBuild {
     const assemblyVersion = MsBuild.getVersion(
       doc,
       'AssemblyVersion',
-      versionPrefix.split('.').length === 3
-        ? `${versionPrefix}.0`
-        : versionPrefix
+      versionPrefix.split('.').length === 3 ? `${versionPrefix}.0` : versionPrefix
     );
     const fileVersion = MsBuild.getVersion(doc, 'FileVersion', assemblyVersion);
-    const informationalVersion = MsBuild.getVersion(
-      doc,
-      'InformationalVersion',
-      version
-    );
+    const informationalVersion = MsBuild.getVersion(doc, 'InformationalVersion', version);
     const packageVersion = MsBuild.getVersion(doc, 'PackageVersion', version);
 
     return {

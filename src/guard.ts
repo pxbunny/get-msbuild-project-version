@@ -6,10 +6,7 @@ export class ArgumentError extends Error {
 }
 
 export abstract class Guard {
-  static aganistEmptyOrWhiteSpace(
-    value: string | undefined,
-    name: string
-  ): void {
+  static aganistEmptyOrWhiteSpace(value: string | undefined, name: string): void {
     if (Guard.isBlank(value)) {
       throw new ArgumentError(`${name} is empty or white space`);
     }

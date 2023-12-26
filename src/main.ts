@@ -10,10 +10,7 @@ import { getInputs, Inputs, setOutputs } from './io';
 import { MsBuild, Versions } from './msbuild';
 import { Validator } from './validator';
 
-function validateVersions(
-  validationInputs: Omit<Inputs, 'file'>,
-  versions: Versions
-): void {
+function validateVersions(validationInputs: Omit<Inputs, 'file'>, versions: Versions): void {
   const {
     validateAll,
     validateVersionPrefix,
@@ -35,27 +32,19 @@ function validateVersions(
 
   const validator = new Validator();
 
-  const shouldVersionPrefixBeValidated =
-    !!validateAll || !!validateVersionPrefix;
-  const shouldVersionSuffixBeValidated =
-    !!validateAll || !!validateVersionSuffix;
-  const shouldVersionBeValidated = !!validateAll || !!validateVersion;
-  const shouldAssemblyVersionBeValidated =
-    !!validateAll || !!validateAssemblyVersion;
-  const shouldFileVersionBeValidated = !!validateAll || !!validateFileVersion;
-  const shouldPackageVersionBeValidated =
-    !!validateAll || !!validatePackageVersion;
+  const shouldVersionPrefixBeValidated   = !!validateAll || !!validateVersionPrefix;
+  const shouldVersionSuffixBeValidated   = !!validateAll || !!validateVersionSuffix;
+  const shouldVersionBeValidated         = !!validateAll || !!validateVersion;
+  const shouldAssemblyVersionBeValidated = !!validateAll || !!validateAssemblyVersion;
+  const shouldFileVersionBeValidated     = !!validateAll || !!validateFileVersion;
+  const shouldPackageVersionBeValidated  = !!validateAll || !!validatePackageVersion;
 
-  shouldVersionPrefixBeValidated &&
-    validator.validateVersionPrefix(versionPrefix);
-  shouldVersionSuffixBeValidated &&
-    validator.validateVersionSuffix(versionSuffix);
-  shouldVersionBeValidated && validator.validateVersion(version);
-  shouldAssemblyVersionBeValidated &&
-    validator.validateAssemblyVersion(assemblyVersion);
-  shouldFileVersionBeValidated && validator.validateFileVersion(fileVersion);
-  shouldPackageVersionBeValidated &&
-    validator.validatePackageVersion(packageVersion);
+  shouldVersionPrefixBeValidated   && validator.validateVersionPrefix(versionPrefix);
+  shouldVersionSuffixBeValidated   && validator.validateVersionSuffix(versionSuffix);
+  shouldVersionBeValidated         && validator.validateVersion(version);
+  shouldAssemblyVersionBeValidated && validator.validateAssemblyVersion(assemblyVersion);
+  shouldFileVersionBeValidated     && validator.validateFileVersion(fileVersion);
+  shouldPackageVersionBeValidated  && validator.validatePackageVersion(packageVersion);
 }
 
 try {
