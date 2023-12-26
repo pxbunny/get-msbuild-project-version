@@ -12909,42 +12909,202 @@ var xpath = ( false) ? 0 : exports;
 
 /***/ }),
 
-/***/ 401:
-/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+/***/ 718:
+/***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.getVersionFromFile = exports.readFile = void 0;
-const xmldom_1 = __nccwpck_require__(213);
-const fs_1 = __nccwpck_require__(147);
-const xpath_1 = __nccwpck_require__(319);
-const validation_1 = __nccwpck_require__(875);
-function readFile(path) {
-    (0, validation_1.validateFilePath)(path);
-    return (0, fs_1.readFileSync)(path, 'utf8');
+exports.Guard = exports.ArgumentError = void 0;
+class ArgumentError extends Error {
+    constructor(message) {
+        super(message);
+        this.name = 'ArgumentError';
+    }
 }
-exports.readFile = readFile;
-function getVersionFromFile(file) {
-    (0, validation_1.ensureFileNotEmpty)(file);
-    const doc = new xmldom_1.DOMParser().parseFromString(file, 'text/xml');
-    const pattern = 'string(/Project/PropertyGroup/Version)';
-    const version = (0, xpath_1.select)(pattern, doc);
-    return version.trim();
+exports.ArgumentError = ArgumentError;
+class Guard {
+    static aganistEmptyOrWhiteSpace(value, name) {
+        if (Guard.isBlank(value)) {
+            throw new ArgumentError(`${name} is empty or white space`);
+        }
+    }
+    static isBlank(str) {
+        return !str || /^\s*$/.test(str);
+    }
 }
-exports.getVersionFromFile = getVersionFromFile;
+exports.Guard = Guard;
 
 
 /***/ }),
 
-/***/ 875:
+/***/ 672:
 /***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.validateVersion = exports.validateFilePath = exports.ensureVersionNotEmpty = exports.ensureFileNotEmpty = exports.ValidationError = void 0;
+exports.setOutputs = exports.getInputs = void 0;
+const core_1 = __nccwpck_require__(186);
+function getInputs() {
+    const TRUE_STRING = 'true';
+    const file = (0, core_1.getInput)('file');
+    const validateAll = (0, core_1.getInput)('validate-all').toLowerCase();
+    const validateVersionPrefix = (0, core_1.getInput)('validate-version-prefix').toLowerCase();
+    const validateVersionSuffix = (0, core_1.getInput)('validate-version-suffix').toLowerCase();
+    const validateVersion = (0, core_1.getInput)('validate-version').toLowerCase();
+    const validateAssemblyVersion = (0, core_1.getInput)('validate-assembly-version').toLowerCase();
+    const validateFileVersion = (0, core_1.getInput)('validate-file-version').toLowerCase();
+    const validatePackageVersion = (0, core_1.getInput)('validate-package-version').toLowerCase();
+    return {
+        file,
+        validateAll: validateAll === TRUE_STRING,
+        validateVersionPrefix: validateVersionPrefix === TRUE_STRING,
+        validateVersionSuffix: validateVersionSuffix === TRUE_STRING,
+        validateVersion: validateVersion === TRUE_STRING,
+        validateAssemblyVersion: validateAssemblyVersion === TRUE_STRING,
+        validateFileVersion: validateFileVersion === TRUE_STRING,
+        validatePackageVersion: validatePackageVersion === TRUE_STRING
+    };
+}
+exports.getInputs = getInputs;
+function setOutputs(versions) {
+    const { versionPrefix, versionSuffix, version, assemblyVersion, fileVersion, informationalVersion, packageVersion } = versions;
+    (0, core_1.setOutput)('version-prefix', versionPrefix);
+    (0, core_1.setOutput)('version-suffix', versionSuffix);
+    (0, core_1.setOutput)('version', version);
+    (0, core_1.setOutput)('assembly-version', assemblyVersion);
+    (0, core_1.setOutput)('file-version', fileVersion);
+    (0, core_1.setOutput)('informational-version', informationalVersion);
+    (0, core_1.setOutput)('package-version', packageVersion);
+}
+exports.setOutputs = setOutputs;
+
+
+/***/ }),
+
+/***/ 399:
+/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+
+"use strict";
+
+/*
+  eslint-disable
+  no-multi-spaces,
+  @typescript-eslint/no-unused-expressions
+*/
+var __rest = (this && this.__rest) || function (s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+const core_1 = __nccwpck_require__(186);
+const io_1 = __nccwpck_require__(672);
+const msbuild_1 = __nccwpck_require__(909);
+const validator_1 = __nccwpck_require__(630);
+function validateVersions(validationInputs, versions) {
+    const { validateAll, validateVersionPrefix, validateVersionSuffix, validateVersion, validateAssemblyVersion, validateFileVersion, validatePackageVersion } = validationInputs;
+    const { versionPrefix, versionSuffix, version, assemblyVersion, fileVersion, packageVersion } = versions;
+    const validator = new validator_1.Validator();
+    const shouldVersionPrefixBeValidated = !!validateAll || !!validateVersionPrefix;
+    const shouldVersionSuffixBeValidated = !!validateAll || !!validateVersionSuffix;
+    const shouldVersionBeValidated = !!validateAll || !!validateVersion;
+    const shouldAssemblyVersionBeValidated = !!validateAll || !!validateAssemblyVersion;
+    const shouldFileVersionBeValidated = !!validateAll || !!validateFileVersion;
+    const shouldPackageVersionBeValidated = !!validateAll || !!validatePackageVersion;
+    shouldVersionPrefixBeValidated &&
+        validator.validateVersionPrefix(versionPrefix);
+    shouldVersionSuffixBeValidated &&
+        validator.validateVersionSuffix(versionSuffix);
+    shouldVersionBeValidated && validator.validateVersion(version);
+    shouldAssemblyVersionBeValidated &&
+        validator.validateAssemblyVersion(assemblyVersion);
+    shouldFileVersionBeValidated && validator.validateFileVersion(fileVersion);
+    shouldPackageVersionBeValidated &&
+        validator.validatePackageVersion(packageVersion);
+}
+try {
+    const _a = (0, io_1.getInputs)(), { file } = _a, validationInputs = __rest(_a, ["file"]);
+    const msbuild = msbuild_1.MsBuild.readFile(file);
+    const versions = msbuild.getVersions();
+    validateVersions(validationInputs, versions);
+    (0, io_1.setOutputs)(versions);
+}
+catch (error) {
+    (0, core_1.setFailed)(error.message);
+}
+
+
+/***/ }),
+
+/***/ 909:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.MsBuild = void 0;
+const xmldom_1 = __nccwpck_require__(213);
 const fs_1 = __nccwpck_require__(147);
+const xpath_1 = __nccwpck_require__(319);
+const guard_1 = __nccwpck_require__(718);
+class MsBuild {
+    constructor(fileContent) {
+        guard_1.Guard.aganistEmptyOrWhiteSpace(fileContent, 'fileContent');
+        this.fileContent = fileContent;
+    }
+    static readFile(filePath) {
+        guard_1.Guard.aganistEmptyOrWhiteSpace(filePath, 'filePath');
+        const fileContent = (0, fs_1.readFileSync)(filePath, 'utf8');
+        return new MsBuild(fileContent);
+    }
+    static getVersion(doc, propertyName, defaultValue) {
+        const pattern = `string(/Project/PropertyGroup/${propertyName})`;
+        const version = (0, xpath_1.select)(pattern, doc);
+        return version ? version.trim() : defaultValue;
+    }
+    getVersions() {
+        const doc = new xmldom_1.DOMParser().parseFromString(this.fileContent, 'text/xml');
+        const versionPrefix = MsBuild.getVersion(doc, 'VersionPrefix', '1.0.0');
+        const versionSuffix = MsBuild.getVersion(doc, 'VersionSuffix', '');
+        const version = MsBuild.getVersion(doc, 'Version', versionSuffix ? `${versionPrefix}-${versionSuffix}` : versionPrefix);
+        const assemblyVersion = MsBuild.getVersion(doc, 'AssemblyVersion', versionPrefix.split('.').length === 3
+            ? `${versionPrefix}.0`
+            : versionPrefix);
+        const fileVersion = MsBuild.getVersion(doc, 'FileVersion', assemblyVersion);
+        const informationalVersion = MsBuild.getVersion(doc, 'InformationalVersion', version);
+        const packageVersion = MsBuild.getVersion(doc, 'PackageVersion', version);
+        return {
+            versionPrefix,
+            versionSuffix,
+            version,
+            assemblyVersion,
+            fileVersion,
+            informationalVersion,
+            packageVersion
+        };
+    }
+}
+exports.MsBuild = MsBuild;
+
+
+/***/ }),
+
+/***/ 630:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.Validator = exports.ValidationError = void 0;
+const guard_1 = __nccwpck_require__(718);
 class ValidationError extends Error {
     constructor(message) {
         super(message);
@@ -12952,37 +13112,51 @@ class ValidationError extends Error {
     }
 }
 exports.ValidationError = ValidationError;
-function isBlank(str) {
-    return !str || /^\s*$/.test(str);
-}
-function ensureFileNotEmpty(file) {
-    if (isBlank(file)) {
-        throw new ValidationError('File is empty');
+class Validator {
+    validateVersionPrefix(versionPrefix) {
+        guard_1.Guard.aganistEmptyOrWhiteSpace(versionPrefix, 'versionPrefix');
+        // major.minor.patch[.build]
+        if (!(versionPrefix === null || versionPrefix === void 0 ? void 0 : versionPrefix.match(/^([0-9]+\.){0,2}[0-9]+$/))) {
+            throw new ValidationError('Wrong VersionPrefix format');
+        }
+    }
+    validateVersionSuffix(versionSuffix) {
+        guard_1.Guard.aganistEmptyOrWhiteSpace(versionSuffix, 'versionSuffix');
+        // Alphanumberic (+ hyphen) string: [0-9A-Za-z-]*
+        if (!(versionSuffix === null || versionSuffix === void 0 ? void 0 : versionSuffix.match(/^[0-9A-Za-z-]+$/))) {
+            throw new ValidationError('Wrong VersionSuffix format');
+        }
+    }
+    validateVersion(version) {
+        guard_1.Guard.aganistEmptyOrWhiteSpace(version, 'version');
+        // major.minor.patch[.build][-prerelease]
+        if (!(version === null || version === void 0 ? void 0 : version.match(/^([0-9]+\.){0,2}[0-9]+(-[0-9A-Za-z-]+)?$/))) {
+            throw new ValidationError('Wrong Version format');
+        }
+    }
+    validateAssemblyVersion(assemblyVersion) {
+        guard_1.Guard.aganistEmptyOrWhiteSpace(assemblyVersion, 'assemblyVersion');
+        // major.minor.patch.build
+        if (!(assemblyVersion === null || assemblyVersion === void 0 ? void 0 : assemblyVersion.match(/^([0-9]+\.){3}[0-9]+$/))) {
+            throw new ValidationError('Wrong AssemblyVersion format');
+        }
+    }
+    validateFileVersion(fileVersion) {
+        guard_1.Guard.aganistEmptyOrWhiteSpace(fileVersion, 'fileVersion');
+        // major.minor.patch.build
+        if (!(fileVersion === null || fileVersion === void 0 ? void 0 : fileVersion.match(/^([0-9]+\.){3}[0-9]+$/))) {
+            throw new ValidationError('Wrong FileVersion format');
+        }
+    }
+    validatePackageVersion(packageVersion) {
+        guard_1.Guard.aganistEmptyOrWhiteSpace(packageVersion, 'packageVersion');
+        // major.minor.patch[.build][-prerelease]
+        if (!(packageVersion === null || packageVersion === void 0 ? void 0 : packageVersion.match(/^([0-9]+\.){0,2}[0-9]+(-[0-9A-Za-z-]+)?$/))) {
+            throw new ValidationError('Wrong PackageVersion format');
+        }
     }
 }
-exports.ensureFileNotEmpty = ensureFileNotEmpty;
-function ensureVersionNotEmpty(version) {
-    if (isBlank(version)) {
-        throw new ValidationError('Version is empty');
-    }
-}
-exports.ensureVersionNotEmpty = ensureVersionNotEmpty;
-function validateFilePath(path) {
-    if (isBlank(path)) {
-        throw new ValidationError('Path is empty');
-    }
-    if (!(0, fs_1.existsSync)(path)) {
-        throw new ValidationError(`File ${path} does not exist`);
-    }
-}
-exports.validateFilePath = validateFilePath;
-function validateVersion(version) {
-    ensureVersionNotEmpty(version);
-    if (!version.match(/^([0-9]+\.){0,3}[0-9]+(-[0-9A-Za-z-]+)?$/)) {
-        throw new ValidationError('Wrong version format');
-    }
-}
-exports.validateVersion = validateVersion;
+exports.Validator = Validator;
 
 
 /***/ }),
@@ -13113,46 +13287,12 @@ module.exports = require("util");
 /******/ 	if (typeof __nccwpck_require__ !== 'undefined') __nccwpck_require__.ab = __dirname + "/";
 /******/ 	
 /************************************************************************/
-var __webpack_exports__ = {};
-// This entry need to be wrapped in an IIFE because it need to be in strict mode.
-(() => {
-"use strict";
-var exports = __webpack_exports__;
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-const core_1 = __nccwpck_require__(186);
-const csproj_1 = __nccwpck_require__(401);
-const validation_1 = __nccwpck_require__(875);
-function getInputs() {
-    const file = (0, core_1.getInput)('file');
-    const validate = (0, core_1.getInput)('validate');
-    const validateLowerCase = validate.toLowerCase();
-    if (validateLowerCase !== 'true' && validateLowerCase !== 'false') {
-        throw new Error('Input validate must be true or false');
-    }
-    return {
-        file,
-        validate: validateLowerCase === 'true'
-    };
-}
-try {
-    const { file, validate } = getInputs();
-    const fileContent = (0, csproj_1.readFile)(file);
-    const version = (0, csproj_1.getVersionFromFile)(fileContent);
-    if (validate) {
-        (0, validation_1.validateVersion)(version);
-    }
-    else {
-        (0, validation_1.ensureVersionNotEmpty)(version);
-    }
-    (0, core_1.setOutput)('version', version);
-}
-catch (error) {
-    (0, core_1.setFailed)(error.message);
-}
-
-})();
-
-module.exports = __webpack_exports__;
+/******/ 	
+/******/ 	// startup
+/******/ 	// Load entry module and return exports
+/******/ 	// This entry module is referenced by other modules so it can't be inlined
+/******/ 	var __webpack_exports__ = __nccwpck_require__(399);
+/******/ 	module.exports = __webpack_exports__;
+/******/ 	
 /******/ })()
 ;

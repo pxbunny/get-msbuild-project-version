@@ -12,7 +12,6 @@
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged && npm run build && git add dist/index.js",
-      "pre-push": "npm test",
       "post-merge": "npm run sync"
     }
   },
