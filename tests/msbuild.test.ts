@@ -33,7 +33,7 @@ describe('getVersions method', () => {
   it('should return correct versions', () => {
     const msbuild = MsBuild.readFile('tests/files/ValidAllData.proj');
     const versions = msbuild.getVersions();
-    expect(versions.versionPrefix).toEqual('1.0.0');
+    expect(versions.versionPrefix).toEqual('1.2.0');
     expect(versions.versionSuffix).toEqual('prelease');
     expect(versions.version).toEqual('1.0.1-beta');
     expect(versions.assemblyVersion).toEqual('1.0.2.0');
