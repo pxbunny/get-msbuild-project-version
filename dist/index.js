@@ -13053,8 +13053,10 @@ const xpath_1 = __nccwpck_require__(319);
 const guard_1 = __nccwpck_require__(718);
 class MsBuild {
     constructor(fileContent) {
-        guard_1.Guard.aganistEmptyOrWhiteSpace(fileContent, 'fileContent');
-        this.fileContent = fileContent;
+        this.fileContent = fileContent !== null && fileContent !== void 0 ? fileContent : '';
+    }
+    get content() {
+        return this.fileContent;
     }
     static readFile(filePath) {
         guard_1.Guard.aganistEmptyOrWhiteSpace(filePath, 'filePath');
@@ -13092,13 +13094,12 @@ exports.MsBuild = MsBuild;
 /***/ }),
 
 /***/ 630:
-/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+/***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.Validator = exports.ValidationError = void 0;
-const guard_1 = __nccwpck_require__(718);
 class ValidationError extends Error {
     constructor(message) {
         super(message);
@@ -13108,44 +13109,38 @@ class ValidationError extends Error {
 exports.ValidationError = ValidationError;
 class Validator {
     validateVersionPrefix(versionPrefix) {
-        guard_1.Guard.aganistEmptyOrWhiteSpace(versionPrefix, 'versionPrefix');
         // major.minor.patch[.build]
-        if (!(versionPrefix === null || versionPrefix === void 0 ? void 0 : versionPrefix.match(/^([0-9]+\.){0,2}[0-9]+$/))) {
+        if (!(versionPrefix === null || versionPrefix === void 0 ? void 0 : versionPrefix.match(/^([0-9]+\.){2,3}[0-9]+$/))) {
             throw new ValidationError('Wrong VersionPrefix format');
         }
     }
     validateVersionSuffix(versionSuffix) {
-        guard_1.Guard.aganistEmptyOrWhiteSpace(versionSuffix, 'versionSuffix');
         // Alphanumberic (+ hyphen) string: [0-9A-Za-z-]*
         if (!(versionSuffix === null || versionSuffix === void 0 ? void 0 : versionSuffix.match(/^[0-9A-Za-z-]+$/))) {
             throw new ValidationError('Wrong VersionSuffix format');
         }
     }
     validateVersion(version) {
-        guard_1.Guard.aganistEmptyOrWhiteSpace(version, 'version');
         // major.minor.patch[.build][-prerelease]
-        if (!(version === null || version === void 0 ? void 0 : version.match(/^([0-9]+\.){0,2}[0-9]+(-[0-9A-Za-z-]+)?$/))) {
+        if (!(version === null || version === void 0 ? void 0 : version.match(/^([0-9]+\.){2,3}[0-9]+(-[0-9A-Za-z-]+)?$/))) {
             throw new ValidationError('Wrong Version format');
         }
     }
     validateAssemblyVersion(assemblyVersion) {
-        guard_1.Guard.aganistEmptyOrWhiteSpace(assemblyVersion, 'assemblyVersion');
         // major.minor.patch.build
         if (!(assemblyVersion === null || assemblyVersion === void 0 ? void 0 : assemblyVersion.match(/^([0-9]+\.){3}[0-9]+$/))) {
             throw new ValidationError('Wrong AssemblyVersion format');
         }
     }
     validateFileVersion(fileVersion) {
-        guard_1.Guard.aganistEmptyOrWhiteSpace(fileVersion, 'fileVersion');
         // major.minor.patch.build
         if (!(fileVersion === null || fileVersion === void 0 ? void 0 : fileVersion.match(/^([0-9]+\.){3}[0-9]+$/))) {
             throw new ValidationError('Wrong FileVersion format');
         }
     }
     validatePackageVersion(packageVersion) {
-        guard_1.Guard.aganistEmptyOrWhiteSpace(packageVersion, 'packageVersion');
         // major.minor.patch[.build][-prerelease]
-        if (!(packageVersion === null || packageVersion === void 0 ? void 0 : packageVersion.match(/^([0-9]+\.){0,2}[0-9]+(-[0-9A-Za-z-]+)?$/))) {
+        if (!(packageVersion === null || packageVersion === void 0 ? void 0 : packageVersion.match(/^([0-9]+\.){2,3}[0-9]+(-[0-9A-Za-z-]+)?$/))) {
             throw new ValidationError('Wrong PackageVersion format');
         }
     }

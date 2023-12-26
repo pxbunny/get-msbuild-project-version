@@ -17,9 +17,12 @@ export type Versions = {
 export class MsBuild {
   private readonly fileContent: string;
 
-  private constructor(fileContent: string) {
-    Guard.aganistEmptyOrWhiteSpace(fileContent, 'fileContent');
-    this.fileContent = fileContent;
+  private constructor(fileContent?: string) {
+    this.fileContent = fileContent ?? '';
+  }
+
+  public get content(): string {
+    return this.fileContent;
   }
 
   public static readFile(filePath: string): MsBuild {
