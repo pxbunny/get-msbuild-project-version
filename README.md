@@ -13,7 +13,7 @@
 steps:
   - uses: actions/checkout@v3
   - name: Get MSBuild project version
-    uses: dae-ne/get-msbuild-project-version@v1
+    uses: dae-ne/get-msbuild-project-version@v2
     id: project-version
     with:
       path: 'path/to/your/project.csproj'
