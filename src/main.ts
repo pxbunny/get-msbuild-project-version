@@ -10,7 +10,9 @@ import { getInputs, Inputs, setOutputs } from './io';
 import { MsBuild, Versions } from './msbuild';
 import { Validator } from './validator';
 
-function validateVersions(validationInputs: Omit<Inputs, 'file'>, versions: Versions): void {
+type ValidationInputs = Omit<Inputs, 'file'>;
+
+function validateVersions(validationInputs: ValidationInputs, versions: Versions): void {
   const {
     validateAll,
     validateVersionPrefix,
@@ -50,7 +52,7 @@ function validateVersions(validationInputs: Omit<Inputs, 'file'>, versions: Vers
 try {
   const { file, ...validationInputs } = getInputs();
 
-  const msbuild = MsBuild.readFile(file);
+  const msbuild  = MsBuild.readFile(file);
   const versions = msbuild.getVersions();
 
   validateVersions(validationInputs, versions);

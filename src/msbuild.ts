@@ -42,16 +42,8 @@ export class MsBuild {
 
     const versionPrefix = MsBuild.getVersion(doc, 'VersionPrefix', '1.0.0');
     const versionSuffix = MsBuild.getVersion(doc, 'VersionSuffix', '');
-    const version = MsBuild.getVersion(
-      doc,
-      'Version',
-      versionSuffix ? `${versionPrefix}-${versionSuffix}` : versionPrefix
-    );
-    const assemblyVersion = MsBuild.getVersion(
-      doc,
-      'AssemblyVersion',
-      versionPrefix.split('.').length === 3 ? `${versionPrefix}.0` : versionPrefix
-    );
+    const version = MsBuild.getVersion(doc, 'Version', versionSuffix ? `${versionPrefix}-${versionSuffix}` : versionPrefix);
+    const assemblyVersion = MsBuild.getVersion(doc, 'AssemblyVersion', versionPrefix.split('.').length === 3 ? `${versionPrefix}.0` : versionPrefix);
     const fileVersion = MsBuild.getVersion(doc, 'FileVersion', assemblyVersion);
     const informationalVersion = MsBuild.getVersion(doc, 'InformationalVersion', version);
     const packageVersion = MsBuild.getVersion(doc, 'PackageVersion', version);
