@@ -1,9 +1,3 @@
-/*
-  eslint-disable
-  no-multi-spaces,
-  @typescript-eslint/no-unused-expressions
-*/
-
 import { setFailed } from '@actions/core';
 
 import { getInputs, Inputs, setOutputs } from './io';
@@ -34,6 +28,8 @@ function validateVersions(validationInputs: ValidationInputs, versions: Versions
 
   const validator = new Validator();
 
+  /* eslint-disable no-multi-spaces */
+
   const shouldVersionPrefixBeValidated   = !!validateAll || !!validateVersionPrefix;
   const shouldVersionSuffixBeValidated   = !!validateAll || !!validateVersionSuffix;
   const shouldVersionBeValidated         = !!validateAll || !!validateVersion;
@@ -41,18 +37,22 @@ function validateVersions(validationInputs: ValidationInputs, versions: Versions
   const shouldFileVersionBeValidated     = !!validateAll || !!validateFileVersion;
   const shouldPackageVersionBeValidated  = !!validateAll || !!validatePackageVersion;
 
+  /* eslint-disable @typescript-eslint/no-unused-expressions */
+
   shouldVersionPrefixBeValidated   && validator.validateVersionPrefix(versionPrefix);
   shouldVersionSuffixBeValidated   && validator.validateVersionSuffix(versionSuffix);
   shouldVersionBeValidated         && validator.validateVersion(version);
   shouldAssemblyVersionBeValidated && validator.validateAssemblyVersion(assemblyVersion);
   shouldFileVersionBeValidated     && validator.validateFileVersion(fileVersion);
   shouldPackageVersionBeValidated  && validator.validatePackageVersion(packageVersion);
+
+  /* eslint-enable no-multi-spaces, @typescript-eslint/no-unused-expressions */
 }
 
 try {
   const { file, ...validationInputs } = getInputs();
 
-  const msbuild  = MsBuild.readFile(file);
+  const msbuild = MsBuild.readFile(file);
   const versions = msbuild.getVersions();
 
   validateVersions(validationInputs, versions);

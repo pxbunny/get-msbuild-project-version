@@ -40,10 +40,22 @@ export class MsBuild {
   public getVersions(): Versions {
     const doc = new DOMParser().parseFromString(this.fileContent, 'text/xml');
 
-    const versionPrefix = MsBuild.getVersion(doc, 'VersionPrefix', '1.0.0');
-    const versionSuffix = MsBuild.getVersion(doc, 'VersionSuffix', '');
-    const version = MsBuild.getVersion(doc, 'Version', versionSuffix ? `${versionPrefix}-${versionSuffix}` : versionPrefix);
-    const assemblyVersion = MsBuild.getVersion(doc, 'AssemblyVersion', versionPrefix.split('.').length === 3 ? `${versionPrefix}.0` : versionPrefix);
+    const defaultVersionPrefix = '1.0.0';
+    const defaultVersionSuffix = '';
+
+    const versionPrefix = MsBuild.getVersion(doc, 'VersionPrefix', defaultVersionPrefix);
+    const versionSuffix = MsBuild.getVersion(doc, 'VersionSuffix', defaultVersionSuffix);
+
+    const defaultVersion = versionSuffix
+      ? `${versionPrefix}-${versionSuffix}`
+      : versionPrefix;
+
+    const defaultAssemblyVersion = versionPrefix.split('.').length === 3
+      ? `${versionPrefix}.0`
+      : versionPrefix;
+
+    const version = MsBuild.getVersion(doc, 'Version', defaultVersion);
+    const assemblyVersion = MsBuild.getVersion(doc, 'AssemblyVersion', defaultAssemblyVersion);
     const fileVersion = MsBuild.getVersion(doc, 'FileVersion', assemblyVersion);
     const informationalVersion = MsBuild.getVersion(doc, 'InformationalVersion', version);
     const packageVersion = MsBuild.getVersion(doc, 'PackageVersion', version);

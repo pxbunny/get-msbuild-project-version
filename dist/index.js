@@ -12988,11 +12988,6 @@ exports.setOutputs = setOutputs;
 
 "use strict";
 
-/*
-  eslint-disable
-  no-multi-spaces,
-  @typescript-eslint/no-unused-expressions
-*/
 var __rest = (this && this.__rest) || function (s, e) {
     var t = {};
     for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
@@ -13013,18 +13008,21 @@ function validateVersions(validationInputs, versions) {
     const { validateAll, validateVersionPrefix, validateVersionSuffix, validateVersion, validateAssemblyVersion, validateFileVersion, validatePackageVersion } = validationInputs;
     const { versionPrefix, versionSuffix, version, assemblyVersion, fileVersion, packageVersion } = versions;
     const validator = new validator_1.Validator();
+    /* eslint-disable no-multi-spaces */
     const shouldVersionPrefixBeValidated = !!validateAll || !!validateVersionPrefix;
     const shouldVersionSuffixBeValidated = !!validateAll || !!validateVersionSuffix;
     const shouldVersionBeValidated = !!validateAll || !!validateVersion;
     const shouldAssemblyVersionBeValidated = !!validateAll || !!validateAssemblyVersion;
     const shouldFileVersionBeValidated = !!validateAll || !!validateFileVersion;
     const shouldPackageVersionBeValidated = !!validateAll || !!validatePackageVersion;
+    /* eslint-disable @typescript-eslint/no-unused-expressions */
     shouldVersionPrefixBeValidated && validator.validateVersionPrefix(versionPrefix);
     shouldVersionSuffixBeValidated && validator.validateVersionSuffix(versionSuffix);
     shouldVersionBeValidated && validator.validateVersion(version);
     shouldAssemblyVersionBeValidated && validator.validateAssemblyVersion(assemblyVersion);
     shouldFileVersionBeValidated && validator.validateFileVersion(fileVersion);
     shouldPackageVersionBeValidated && validator.validatePackageVersion(packageVersion);
+    /* eslint-enable no-multi-spaces, @typescript-eslint/no-unused-expressions */
 }
 try {
     const _a = (0, io_1.getInputs)(), { file } = _a, validationInputs = __rest(_a, ["file"]);
@@ -13070,10 +13068,18 @@ class MsBuild {
     }
     getVersions() {
         const doc = new xmldom_1.DOMParser().parseFromString(this.fileContent, 'text/xml');
-        const versionPrefix = MsBuild.getVersion(doc, 'VersionPrefix', '1.0.0');
-        const versionSuffix = MsBuild.getVersion(doc, 'VersionSuffix', '');
-        const version = MsBuild.getVersion(doc, 'Version', versionSuffix ? `${versionPrefix}-${versionSuffix}` : versionPrefix);
-        const assemblyVersion = MsBuild.getVersion(doc, 'AssemblyVersion', versionPrefix.split('.').length === 3 ? `${versionPrefix}.0` : versionPrefix);
+        const defaultVersionPrefix = '1.0.0';
+        const defaultVersionSuffix = '';
+        const versionPrefix = MsBuild.getVersion(doc, 'VersionPrefix', defaultVersionPrefix);
+        const versionSuffix = MsBuild.getVersion(doc, 'VersionSuffix', defaultVersionSuffix);
+        const defaultVersion = versionSuffix
+            ? `${versionPrefix}-${versionSuffix}`
+            : versionPrefix;
+        const defaultAssemblyVersion = versionPrefix.split('.').length === 3
+            ? `${versionPrefix}.0`
+            : versionPrefix;
+        const version = MsBuild.getVersion(doc, 'Version', defaultVersion);
+        const assemblyVersion = MsBuild.getVersion(doc, 'AssemblyVersion', defaultAssemblyVersion);
         const fileVersion = MsBuild.getVersion(doc, 'FileVersion', assemblyVersion);
         const informationalVersion = MsBuild.getVersion(doc, 'InformationalVersion', version);
         const packageVersion = MsBuild.getVersion(doc, 'PackageVersion', version);
