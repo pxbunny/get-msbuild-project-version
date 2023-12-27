@@ -1,0 +1,13 @@
+<Project>
+
+  <PropertyGroup>
+    <VersionPrefix>1.2.0</VersionPrefix>
+    <VersionSuffix>prelease</VersionSuffix>
+    <Version>1.0.1-beta</Version>
+    <AssemblyVersion>1.0.2.0</AssemblyVersion>
+    <FileVersion>1.0.2.1</FileVersion>
+    <InformationalVersion>version</InformationalVersion>
+    <PackageVersion>1.0.3</PackageVersion>
+  </PropertyGroup>
+
+</Project>
