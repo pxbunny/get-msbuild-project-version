@@ -26,7 +26,7 @@ export class MsBuild {
   }
 
   public static readFile(filePath: string): MsBuild {
-    Guard.aganistEmptyOrWhiteSpace(filePath, 'filePath');
+    Guard.againstEmptyOrWhiteSpace(filePath, 'filePath');
     const fileContent = readFileSync(filePath, 'utf8');
     return new MsBuild(fileContent);
   }

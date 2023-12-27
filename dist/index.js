@@ -12924,7 +12924,7 @@ class ArgumentError extends Error {
 }
 exports.ArgumentError = ArgumentError;
 class Guard {
-    static aganistEmptyOrWhiteSpace(value, name) {
+    static againstEmptyOrWhiteSpace(value, name) {
         if (Guard.isBlank(value)) {
             throw new ArgumentError(`${name} is empty or white space`);
         }
@@ -13057,7 +13057,7 @@ class MsBuild {
         return this.fileContent;
     }
     static readFile(filePath) {
-        guard_1.Guard.aganistEmptyOrWhiteSpace(filePath, 'filePath');
+        guard_1.Guard.againstEmptyOrWhiteSpace(filePath, 'filePath');
         const fileContent = (0, fs_1.readFileSync)(filePath, 'utf8');
         return new MsBuild(fileContent);
     }
