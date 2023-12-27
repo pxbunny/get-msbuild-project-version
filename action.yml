@@ -4,13 +4,49 @@ inputs:
   file:
     description: 'Project file path'
     required: true
-  validate:
-    description: 'true to validate version format, false to skip validation'
+  validate-all:
+    description: 'Validate all version parts'
     required: false
-    default: 'true'
+    default: false
+  validate-version-prefix:
+    description: 'Validate version prefix'
+    required: false
+    default: false
+  validate-version-suffix:
+    description: 'Validate version suffix'
+    required: false
+    default: false
+  validate-version:
+    description: 'Validate version'
+    required: false
+    default: false
+  validate-assembly-version:
+    description: 'Validate assembly version'
+    required: false
+    default: false
+  validate-file-version:
+    description: 'Validate file version'
+    required: false
+    default: false
+  validate-package-version:
+    description: 'Validate package version'
+    required: false
+    default: false
 outputs:
+  version-prefix:
+    description: 'Version prefix'
+  version-suffix:
+    description: 'Version suffix'
   version:
-    description: 'Project version'
+    description: 'Version'
+  assembly-version:
+    description: 'Assembly version'
+  file-version:
+    description: 'File version'
+  informational-version:
+    description: 'Informational version'
+  package-version:
+    description: 'Package version'
 runs:
   using: 'node16'
   main: 'dist/index.js'

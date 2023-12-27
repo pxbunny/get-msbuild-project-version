@@ -1,42 +1,63 @@
-import { getInput, setFailed, setOutput } from '@actions/core';
+import { setFailed } from '@actions/core';
 
-import { getVersionFromFile, readFile } from './csproj';
-import { ensureVersionNotEmpty, validateVersion } from './validation';
+import { getInputs, Inputs, setOutputs } from './io';
+import { MsBuild, Versions } from './msbuild';
+import { Validator } from './validator';
 
-type Inputs = {
-  file: string;
-  validate: boolean;
-};
+type ValidationInputs = Omit<Inputs, 'file'>;
 
-function getInputs(): Inputs {
-  const file = getInput('file');
-  const validate = getInput('validate');
+function validateVersions(validationInputs: ValidationInputs, versions: Versions): void {
+  const {
+    validateAll,
+    validateVersionPrefix,
+    validateVersionSuffix,
+    validateVersion,
+    validateAssemblyVersion,
+    validateFileVersion,
+    validatePackageVersion
+  } = validationInputs;
 
-  const validateLowerCase = validate.toLowerCase();
+  const {
+    versionPrefix,
+    versionSuffix,
+    version,
+    assemblyVersion,
+    fileVersion,
+    packageVersion
+  } = versions;
 
-  if (validateLowerCase !== 'true' && validateLowerCase !== 'false') {
-    throw new Error('Input validate must be true or false');
-  }
+  const validator = new Validator();
 
-  return {
-    file,
-    validate: validateLowerCase === 'true'
-  };
+  /* eslint-disable no-multi-spaces */
+
+  const shouldVersionPrefixBeValidated   = !!validateAll || !!validateVersionPrefix;
+  const shouldVersionSuffixBeValidated   = !!validateAll || !!validateVersionSuffix;
+  const shouldVersionBeValidated         = !!validateAll || !!validateVersion;
+  const shouldAssemblyVersionBeValidated = !!validateAll || !!validateAssemblyVersion;
+  const shouldFileVersionBeValidated     = !!validateAll || !!validateFileVersion;
+  const shouldPackageVersionBeValidated  = !!validateAll || !!validatePackageVersion;
+
+  /* eslint-disable @typescript-eslint/no-unused-expressions */
+
+  shouldVersionPrefixBeValidated   && validator.validateVersionPrefix(versionPrefix);
+  shouldVersionSuffixBeValidated   && validator.validateVersionSuffix(versionSuffix);
+  shouldVersionBeValidated         && validator.validateVersion(version);
+  shouldAssemblyVersionBeValidated && validator.validateAssemblyVersion(assemblyVersion);
+  shouldFileVersionBeValidated     && validator.validateFileVersion(fileVersion);
+  shouldPackageVersionBeValidated  && validator.validatePackageVersion(packageVersion);
+
+  /* eslint-enable no-multi-spaces, @typescript-eslint/no-unused-expressions */
 }
 
 try {
-  const { file, validate } = getInputs();
+  const { file, ...validationInputs } = getInputs();
 
-  const fileContent = readFile(file);
-  const version = getVersionFromFile(fileContent);
+  const msbuild = MsBuild.readFile(file);
+  const versions = msbuild.getVersions();
 
-  if (validate) {
-    validateVersion(version);
-  } else {
-    ensureVersionNotEmpty(version);
-  }
+  validateVersions(validationInputs, versions);
 
-  setOutput('version', version);
+  setOutputs(versions);
 } catch (error) {
   setFailed(error.message);
 }
