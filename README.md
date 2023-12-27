@@ -3,7 +3,7 @@
 GitHub Action to get MSBuild project (e.g. *.csproj*) version from the project file.
 
 ## Inputs
-- `path` - path to the project file (string, required)
+- `file` - path to the project file (string, required)
 - `validate-all` - validate all version parts (boolean, optional, default: **false**)
 - `validate-version-prefix` - validate version prefix (boolean, optional, default: **false**)
 - `validate-version-suffix` - validate version suffix (boolean, optional, default: **false**)
@@ -31,7 +31,7 @@ steps:
     uses: dae-ne/get-msbuild-project-version@v1
     id: project-version
     with:
-      path: 'path/to/your/project.csproj'
+      file: 'path/to/your/project.csproj'
       validate-all: true
   - run: echo ${{ steps.project-version.outputs.version-prefix }}
   - run: echo ${{ steps.project-version.outputs.version-suffix }}
