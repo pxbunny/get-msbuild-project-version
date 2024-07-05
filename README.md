@@ -33,13 +33,7 @@ steps:
     with:
       file: 'path/to/your/project.csproj'
       validate-all: true
-  - run: echo ${{ steps.project-version.outputs.version-prefix }}
-  - run: echo ${{ steps.project-version.outputs.version-suffix }}
   - run: echo ${{ steps.project-version.outputs.version }}
-  - run: echo ${{ steps.project-version.outputs.assembly-version }}
-  - run: echo ${{ steps.project-version.outputs.file-version }}
-  - run: echo ${{ steps.project-version.outputs.informational-version }}
-  - run: echo ${{ steps.project-version.outputs.package-version }}
 ```
 
 ## License
