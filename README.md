@@ -28,7 +28,7 @@ steps:
   - name: Checkout code
     uses: actions/checkout@v4
   - name: Get MSBuild project version
-    uses: rczaka/get-msbuild-project-version@v2
+    uses: pxbunny/get-msbuild-project-version@v2
     id: project-version
     with:
       file: 'path/to/your/project.csproj'
